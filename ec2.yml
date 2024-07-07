@@ -1,0 +1,36 @@
+Parameters:
+  InstanceTypeParameter:
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - m1.small
+      - m1.large
+    Description: Enter t2.micro, m1.small, or m1.large. Default is t2.micro.
+  ImageName:
+    Type: String
+    Default: "ami-04a81a99f5ec58529"
+Resources:
+  MyEC2Instance: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: 
+        Ref: ImageName
+      KeyName: "testubuntu"
+      InstanceType: 
+        Ref: InstanceTypeParameter
+      Tags: 
+        - Key: "name"
+          Value: "awsEc2Demo"
+        - Key: "env"
+          Value: "dev"
+Outputs:
+  InstanceID:
+    Description: The Instance ID
+    Value: !Ref MyEC2Instance
+  MyEC2InstancePIP: 
+    Description: MyEC2Instance Public Ip
+    Value: !GetAtt MyEC2Instance.PublicIp
+  MyEC2privateIP: 
+    Description: MyEC2Instance Public Ip
+    Value: !GetAtt MyEC2Instance.PrivateIp
